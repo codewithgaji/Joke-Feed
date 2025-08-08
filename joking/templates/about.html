@@ -1,0 +1,132 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - JokeFeed Developer</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <a href="/" class="logo">😂 JokeFeed</a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="#journey">My Journey</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="container">
+                <div class="profile-image"><img src="{% static 'images/GajiYaqub.png' %}" alt="👨‍💻"></div>
+                <h1>Hi, I'm Gaji Yaqub,  the Creator of JokeFeed</h1>
+                <p>Passionate Python Developer & Aspiring Full-Stack Engineer</p>
+            </div>
+        </section>
+
+        <!-- About Me -->
+        <section class="content-section">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>
+                    Welcome to my corner of the internet! I'm a passionate developer who believes that code should not only solve problems but also bring joy to people's lives. JokeFeed is my latest creation - a platform designed to spread laughter and showcase the power of modern web development.
+                </p>
+                <p>
+                    My journey in programming started with curiosity and has evolved into a deep passion for creating meaningful digital experiences. I love tackling challenging problems, learning new technologies, and building applications that make a real impact on users' daily lives.
+                </p>
+                <p>
+                    Currently, I'm expanding my skillset by diving deeper into JavaScript to complement my strong Python foundation. My goal is to become a versatile full-stack developer who can bring ideas to life from concept to deployment.
+                </p>
+            </div>
+        </section>
+
+        <!-- Technical Skills -->
+        <section class="content-section">
+            <div class="container">
+                <h2>Technical Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>🐍 Backend Development</h3>
+                        <ul class="skill-list">
+                            <li>Python Programming</li>
+                            <li>Django Framework</li>
+                            <li>Django REST Framework</li>
+                            <li>Database Design (SQLite/PostgreSQL)</li>
+                            <li>API Development</li>
+                            <li>Authentication Systems</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>🎮 Game Development</h3>
+                        <ul class="skill-list">
+                            <li>Python Game Development</li>
+                            <li>Game Logic & Mechanics</li>
+                            <li>User Interface Design</li>
+                            <li>Interactive Experiences</li>
+                            <li>Problem-Solving Algorithms</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>🛠️ Tools & CLI</h3>
+                        <ul class="skill-list">
+                            <li>Command Line Interface Development</li>
+                            <li>Automation Scripts</li>
+                            <li>Developer Tools</li>
+                            <li>System Integration</li>
+                            <li>Process Optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>🌐 Frontend Development</h3>
+                        <ul class="skill-list">
+                            <li>HTML5 & CSS3</li>
+                            <li>JavaScript (Learning)</li>
+                            <li>Responsive Design</li>
+                            <li>DOM Manipulation</li>
+                            <li>API Integration</li>
+                            <li>User Experience Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Projects -->
+        <section class="content-section" id="projects">
+            <div class="container">
+                <h2>My Development Portfolio</h2>
+                <p>Here's a showcase of my development journey across different domains:</p>
+                
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-number">4+</div>
+                        <h3>Django Web Applications</h3>
+                        <p>
+                            Built multiple full-stack web applications using Django, including JokeFeed. These projects showcase my ability to handle user authentication, database design, API development, and creating engaging user experiences.
+                        </p>
+                        <p><strong>Key Features:</strong> User management, real-time interactions, responsive design, RESTful APIs</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-number">5+</div>
+                        <h3>Python Games</h3>
+                        <p>
+                            Developed various interactive games using Python, demonstrating my understanding of game logic, user interface design, and creating engaging interactive experiences that keep users entertained.
+                        </p>
+                        <p><strong>Skills Applied:</strong> Algorithm design
+
+{% endblock%}

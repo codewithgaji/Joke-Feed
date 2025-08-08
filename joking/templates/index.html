@@ -1,0 +1,416 @@
+{% block content %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jokes - Laugh Out Loud!</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">😂 Jokes</div>
+        <div class="nav-buttons">
+          <button class="nav-btn add-joke-btn" onclick="openModal()">
+            + Add Joke
+          </button>
+          <a href="{% url 'landingpage' %}"><button class="nav-btn logout-btn" onclick="logout()">Logout</button></a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <div class="joke-container" id="jokeContainer">
+        <div class="joke-content" id="jokeContent">
+          <div class="no-jokes" id="noJokes">Loading amazing jokes... 😄</div>
+        </div>
+      </div>
+      
+      <!-- Navigation Controls -->
+      <div class="navigation-controls">
+        <button class="nav-control-btn" onclick="previousJoke()">← Previous</button>
+        <button class="nav-control-btn" onclick="nextJoke()">Next →</button>
+      </div>
+    </div>
+
+    <!-- Add Joke Modal -->
+    <div id="addJokeModal" class="modal">
+      <div class="modal-content">
+        <h2>Add a New Joke</h2>
+        <form id="addJokeForm">
+          <textarea
+            id="jokeInput"
+            placeholder="Share your funniest joke..."
+            required
+          ></textarea>
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="modal-btn cancel-btn"
+              onclick="closeModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="modal-btn submit-btn">
+              Post Joke
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let currentJokes = [];
+      let currentJokeIndex = 0;
+      let autoNextTimer = null;
+      let timerDisplay = null;
+
+      // Initialize the app
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAuth();
+        loadJokes();
+      });
+
+      // Check if user is authenticated
+      function checkAuth() {
+        const token = localStorage.getItem("auth_token");
+        if (!token) {
+          window.location.href = "/login/";
+          return;
+        }
+      }
+
+      // Load jokes from your Django API
+      async function loadJokes() {
+        try {
+          const response = await fetch("/Added/", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+          });
+
+          if (response.ok) {
+            currentJokes = await response.json();
+            if (currentJokes.length > 0) {
+              displayCurrentJoke();
+              startAutoNext();
+            } else {
+              showNoJokes();
+            }
+          } else {
+            throw new Error("Failed to load jokes");
+          }
+        } catch (error) {
+          console.error("Error loading jokes:", error);
+          showNoJokes();
+        }
+      }
+
+      // Display current joke with animation
+      function displayCurrentJoke() {
+        if (currentJokes.length === 0) {
+          showNoJokes();
+          return;
+        }
+
+        const joke = currentJokes[currentJokeIndex];
+        const jokeContent = document.getElementById("jokeContent");
+
+        // Fade out current content
+        jokeContent.style.opacity = "0";
+        jokeContent.style.transform = "translateY(20px)";
+
+        setTimeout(() => {
+          jokeContent.innerHTML = `
+                    <div class="joke-text">${joke.content || joke.text}</div>
+                    <div class="joke-meta">
+                        <div class="author">
+                            <div class="author-avatar">${(
+                              joke.created_by ||
+                              joke.author ||
+                              "Anonymous"
+                            )
+                              .charAt(0)
+                              .toUpperCase()}</div>
+                            <span>by ${
+                              joke.created_by || joke.author || "Anonymous"
+                            }</span>
+                        </div>
+                        <div class="date">${formatDate(
+                          joke.created_at || joke.date
+                        )}</div>
+                    </div>
+                    <div class="vote-buttons">
+                        <button class="vote-btn upvote-btn" onclick="vote('up', ${
+                          joke.id
+                        })">
+                            👍
+                        </button>
+                        <button class="vote-btn downvote-btn" onclick="vote('down', ${
+                          joke.id
+                        })">
+                            👎
+                        </button>
+                    </div>
+                    <div class="joke-stats">
+                        <div class="stat-item">
+                            <span>👍</span>
+                            <span id="upvotes-${joke.id}">${
+            joke.upvotes || 0
+          }</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>👎</span>
+                            <span id="downvotes-${joke.id}">${
+            joke.downvotes || 0
+          }</span>
+                        </div>
+                    </div>
+                    <div class="next-joke-timer" id="timer">Next joke in <span id="countdown">7</span>s</div>
+                `;
+
+          // Fade in new content
+          jokeContent.style.opacity = "1";
+          jokeContent.style.transform = "translateY(0)";
+        }, 300);
+      }
+
+      // Vote on a joke
+      async function vote(type, jokeId) {
+        try {
+          const voteType = type === 'up' ? 'upvote' : 'downvote';
+          const response = await fetch(`/${jokeId}/${voteType}/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({ vote_type: voteType }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            
+            // After voting, get the updated vote counts
+            const voteResponse = await fetch(`/${jokeId}/votes/`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+                "X-CSRFToken": getCookie("csrftoken"),
+              },
+            });
+            
+            if (voteResponse.ok) {
+              const voteData = await voteResponse.json();
+              
+              // Update vote counts using the correct field names from your backend
+              const upvoteElement = document.getElementById(`upvotes-${jokeId}`);
+              const downvoteElement = document.getElementById(`downvotes-${jokeId}`);
+
+              if (upvoteElement) upvoteElement.textContent = voteData.Upvotes || 0;
+              if (downvoteElement) downvoteElement.textContent = voteData.Downvotes || 0;
+            }
+
+            // Add visual feedback
+            const button = event.target.closest(".vote-btn");
+            if (button) {
+              button.classList.add("voted");
+              setTimeout(() => button.classList.remove("voted"), 600);
+            }
+
+            // Move to next joke faster after voting
+            clearTimeout(autoNextTimer);
+            clearInterval(timerDisplay);
+            setTimeout(() => {
+              nextJoke();
+            }, 1000);
+          } else {
+            console.error("Vote failed");
+          }
+        } catch (error) {
+          console.error("Error voting:", error);
+        }
+      }
+
+      // Move to next joke
+      function nextJoke() {
+        currentJokeIndex = (currentJokeIndex + 1) % currentJokes.length;
+        displayCurrentJoke();
+        startAutoNext();
+      }
+
+      // Move to previous joke
+      function previousJoke() {
+        currentJokeIndex = (currentJokeIndex - 1 + currentJokes.length) % currentJokes.length;
+        displayCurrentJoke();
+        startAutoNext();
+      }
+
+      // Start auto-next timer
+      function startAutoNext() {
+        clearTimeout(autoNextTimer);
+        clearInterval(timerDisplay);
+
+        let countdown = 7;
+        const countdownElement = document.getElementById("countdown");
+
+        if (countdownElement) {
+          timerDisplay = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+
+            if (countdown <= 0) {
+              clearInterval(timerDisplay);
+            }
+          }, 1000);
+        }
+
+        autoNextTimer = setTimeout(() => {
+          nextJoke();
+        }, 7000);
+      }
+
+      // Show no jokes message
+      function showNoJokes() {
+        const jokeContent = document.getElementById("jokeContent");
+        jokeContent.innerHTML = `
+                <div class="no-jokes">
+                    No jokes available yet! 😢<br>
+                    <button class="nav-btn add-joke-btn" onclick="openModal()" style="margin-top: 20px;">
+                        Be the first to add one! 
+                    </button>
+                </div>
+            `;
+      }
+
+      // Format date
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) return "Yesterday";
+        if (diffDays < 7) return `${diffDays} days ago`;
+        return date.toLocaleDateString();
+      }
+
+      // Modal functions
+      function openModal() {
+        document.getElementById("addJokeModal").style.display = "block";
+        document.getElementById("jokeInput").focus();
+      }
+
+      function closeModal() {
+        document.getElementById("addJokeModal").style.display = "none";
+        document.getElementById("jokeInput").value = "";
+      }
+
+      // Handle add joke form submission
+      document
+        .getElementById("addJokeForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const jokeText = document.getElementById("jokeInput").value.trim();
+          if (!jokeText) return;
+
+          const submitBtn = e.target.querySelector(".submit-btn");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Posting...";
+
+          try {
+            const response = await fetch("/Added/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+                "X-CSRFToken": getCookie("csrftoken"),
+              },
+              body: JSON.stringify({
+                content: jokeText,
+              }),
+            });
+
+            if (response.ok) {
+              const newJoke = await response.json();
+              currentJokes.unshift(newJoke); // Add to beginning of array
+              closeModal();
+
+              // Show the new joke
+              currentJokeIndex = 0;
+              displayCurrentJoke();
+              startAutoNext();
+            } else {
+              throw new Error("Failed to post joke");
+            }
+          } catch (error) {
+            console.error("Error posting joke:", error);
+            alert("Failed to post joke. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Post Joke";
+          }
+        });
+
+      // Logout function
+      function logout() {
+        localStorage.removeItem("auth_token");
+        window.location.href = "/login/";
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("addJokeModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          clearTimeout(autoNextTimer);
+          clearInterval(timerDisplay);
+          nextJoke();
+        }
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          clearTimeout(autoNextTimer);
+          clearInterval(timerDisplay);
+          previousJoke();
+        }
+        if (e.key === "Escape") {
+          closeModal();
+        }
+        if (e.key === "n" && e.ctrlKey) {
+          e.preventDefault();
+          openModal();
+        }
+      });
+
+      // Get CSRF token function
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  </body>
+</html>
+
+{% endblock %}

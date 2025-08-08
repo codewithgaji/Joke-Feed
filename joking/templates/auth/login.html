@@ -1,0 +1,131 @@
+{% block content %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Jokes</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="logo">
+        <h1>😂 Jokes</h1>
+        <p>Welcome back!</p>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+      <div class="success-message" id="successMessage"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember" />
+          <label for="remember">Remember me</label>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+      </form>
+
+      <p class="signup-link">
+        Don't have an account? <a href="/signup/">Create one here</a>
+      </p>
+    </div>
+
+    <script>
+      const form = document.getElementById("loginForm");
+      const submitBtn = document.getElementById("loginBtn");
+      const errorMessage = document.getElementById("errorMessage");
+      const successMessage = document.getElementById("successMessage");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Clear previous messages
+        errorMessage.style.display = "none";
+        successMessage.style.display = "none";
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+          email: formData.get("email"),
+          password: formData.get("password"),
+          remember: formData.get("remember") === "on",
+        };
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add("loading");
+        submitBtn.textContent = "Signing In...";
+
+        try {
+          // Replace with your Django login endpoint
+          const response = await fetch("/api/view/login/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            successMessage.textContent = "Login successful! Redirecting...";
+            successMessage.style.display = "block";
+
+            // Store auth token if provided
+            if (result.token) {
+              localStorage.setItem("auth_token", result.token);
+            }
+
+            setTimeout(() => {
+              window.location.href = "home/";
+            }, 1500);
+          } else {
+            throw new Error(result.message || "Login failed");
+          }
+        } catch (error) {
+          errorMessage.textContent =
+            error.message || "Invalid email or password";
+          errorMessage.style.display = "block";
+        } finally {
+          // Reset button state
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("loading");
+          submitBtn.textContent = "Sign In";
+        }
+      });
+
+      // Function to get CSRF token for Django
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  </body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,280 @@
+{% block content %}
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JokeFeed - Your Daily Dose of Laughter</title>
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">😂 JokeFeed</a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="{% url 'about' %}">About</a>
+                    <a href="{% url 'login_page' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-emoji">🤣</div>
+                <h1>Welcome to JokeFeed</h1>
+                <p>Your daily dose of laughter, one joke at a time</p>
+                <a href="{% url 'signup_page' %}" class="cta-button">Get Started - It's Free!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;">Why You'll Love JokeFeed</h2>
+            <p style="text-align: center; color: #666; font-size: 1.2rem;">Experience jokes like never before</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>TikTok-Style Experience</h3>
+                    <p>Swipe through jokes one at a time with smooth transitions and auto-advance every 7 seconds. It's addictive!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👍</div>
+                    <h3>Vote & Interact</h3>
+                    <p>Love a joke? Upvote it! Not your style? Downvote and move on. Help curate the best content for everyone.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3>Share Your Humor</h3>
+                    <p>Got a killer joke? Share it with the world! Add your own jokes and watch them get reactions from users.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Easy Navigation</h3>
+                    <p>Use arrow keys, spacebar, or navigation buttons to control your experience. Skip jokes or go back to favorites.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your account is protected with secure authentication. Only you can see your voting history and contributions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Fully Responsive</h3>
+                    <p>Enjoy JokeFeed on any device - desktop, tablet, or mobile. The experience adapts perfectly to your screen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">How JokeFeed Works</h2>
+            <p style="text-align: center; font-size: 1.2rem; opacity: 0.9;">Get started in seconds</p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up Free</h3>
+                    <p>Create your account in under 30 seconds. Just username, email, and password - that's it!</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Start Laughing</h3>
+                    <p>Jump right into the feed! Jokes auto-advance every 7 seconds or navigate manually with arrow keys.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Vote & Share</h3>
+                    <p>Upvote jokes you love, downvote ones you don't. Add your own jokes to make others laugh too!</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Enjoy Daily</h3>
+                    <p>Come back anytime for fresh laughs. New jokes are added regularly by our growing community!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">See It In Action</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Here's what the JokeFeed experience looks like</p>
+            
+            <div class="demo-phone">
+                <div class="demo-screen">
+                    <div class="demo-joke">
+                        <h3 style="margin-bottom: 1rem;">Current Joke:</h3>
+                        <p id="demoJokeText">"Why don't scientists trust atoms? Because they make up everything!"</p>
+                        <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                            by ComedyMaster • 2 days ago
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <span>👍 42</span> • <span>👎 3</span>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-controls">
+                        <button class="demo-btn" onclick="previousDemoJoke()">←</button>
+                        <button class="demo-btn" onclick="nextDemoJoke()">→</button>
+                    </div>
+                    
+                    <div style="position: absolute; bottom: 5px; font-size: 0.8rem; opacity: 0.7;">
+                        Next joke in <span id="demoTimer">7</span>s
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 1.1rem; opacity: 0.8;">
+                <strong>Pro tip:</strong> Use arrow keys or spacebar to navigate, or just let them auto-advance!
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Hilarious Jokes</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1000+</h3>
+                    <p>Happy Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5000+</h3>
+                    <p>Votes Cast</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Free Forever</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Laughing?</h2>
+            <p>Join thousands of users who get their daily dose of humor on JokeFeed</p>
+            <a href="/signup/" class="cta-button" style="margin-right: 1rem;">Sign Up Now</a>
+            <a href="{% url 'login_page' %}" class="cta-button" style="background: transparent; border: 2px solid white;">Already Have Account?</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 JokeFeed. Built with ❤️ and lots of coffee ☕</p>
+            <p style="margin-top: 0.5rem; opacity: 0.7;">
+                <a href="{% url 'about' %}" style="color: white; text-decoration: none;">About</a> • 
+                <a href="#" style="color: white; text-decoration: none;">Privacy</a> • 
+                <a href="#" style="color: white; text-decoration: none;">Terms</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Demo functionality
+        const demoJokes = [
+            "Why don't scientists trust atoms? Because they make up everything!",
+            "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+            "Why don't eggs tell jokes? They'd crack each other up!",
+            "I invented a new word: Plagiarism!",
+            "Why did the scarecrow win an award? He was outstanding in his field!"
+        ];
+        
+        let currentDemoJoke = 0;
+        let demoTimer = 7;
+        let demoInterval;
+        
+        function nextDemoJoke() {
+            currentDemoJoke = (currentDemoJoke + 1) % demoJokes.length;
+            document.getElementById('demoJokeText').textContent = `"${demoJokes[currentDemoJoke]}"`;
+            resetDemoTimer();
+        }
+        
+        function previousDemoJoke() {
+            currentDemoJoke = (currentDemoJoke - 1 + demoJokes.length) % demoJokes.length;
+            document.getElementById('demoJokeText').textContent = `"${demoJokes[currentDemoJoke]}"`;
+            resetDemoTimer();
+        }
+        
+        function resetDemoTimer() {
+            clearInterval(demoInterval);
+            demoTimer = 7;
+            document.getElementById('demoTimer').textContent = demoTimer;
+            
+            demoInterval = setInterval(() => {
+                demoTimer--;
+                document.getElementById('demoTimer').textContent = demoTimer;
+                
+                if (demoTimer <= 0) {
+                    nextDemoJoke();
+                }
+            }, 1000);
+        }
+        
+        // Start demo timer
+        resetDemoTimer();
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.querySelector('.logo').style.color = '#667eea';
+                nav.querySelectorAll('.nav-links a').forEach(link => {
+                    link.style.color = '#333';
+                });
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.1)';
+                nav.querySelector('.logo').style.color = 'white';
+                nav.querySelectorAll('.nav-links a').forEach(link => {
+                    link.style.color = 'white';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+{% endblock%}
