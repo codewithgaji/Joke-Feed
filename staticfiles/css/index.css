@@ -1,0 +1,401 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+min-height: 100vh;
+overflow-x: hidden;
+color: #333;
+}
+
+.navbar {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+padding: 15px 0;
+box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 1000;
+}
+
+.nav-container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo {
+font-size: 1.8em;
+font-weight: 700;
+color: #2a5298;
+}
+
+.nav-buttons {
+display: flex;
+gap: 15px;
+}
+
+.nav-btn {
+padding: 8px 20px;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-weight: 600;
+transition: all 0.3s ease;
+}
+
+.add-joke-btn {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+}
+
+.add-joke-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.logout-btn {
+background: transparent;
+color: #666;
+border: 2px solid #e1e5e9;
+}
+
+.logout-btn:hover {
+background: #f8f9fa;
+}
+
+.main-container {
+margin-top: 80px;
+min-height: calc(100vh - 80px);
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+
+.joke-container {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+border-radius: 25px;
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+padding: 40px;
+max-width: 600px;
+width: 100%;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.joke-container::before {
+content: "";
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(
+  45deg,
+  transparent,
+  rgba(102, 126, 234, 0.1),
+  transparent
+);
+animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+0% {
+  transform: translateX(-100%);
+}
+100% {
+  transform: translateX(100%);
+}
+}
+
+.joke-content {
+position: relative;
+z-index: 2;
+}
+
+.joke-text {
+font-size: 1.3em;
+line-height: 1.6;
+margin-bottom: 30px;
+color: #333;
+opacity: 0;
+transform: translateY(20px);
+animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
+}
+
+.joke-meta {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 30px;
+font-size: 0.9em;
+color: #666;
+opacity: 0;
+animation: fadeIn 1s ease 0.3s forwards;
+}
+
+@keyframes fadeIn {
+to {
+  opacity: 1;
+}
+}
+
+.author {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.author-avatar {
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-weight: 600;
+}
+
+.vote-buttons {
+display: flex;
+gap: 20px;
+justify-content: center;
+margin-bottom: 20px;
+opacity: 0;
+animation: fadeIn 1s ease 0.5s forwards;
+}
+
+.vote-btn {
+width: 60px;
+height: 60px;
+border: none;
+border-radius: 50%;
+font-size: 1.5em;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+}
+
+.upvote-btn {
+background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+color: white;
+}
+
+.downvote-btn {
+background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+color: white;
+}
+
+.vote-btn:hover {
+transform: scale(1.1);
+box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.vote-btn:active {
+transform: scale(0.95);
+}
+
+.vote-btn.voted {
+animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+0% {
+  transform: scale(1);
+}
+50% {
+  transform: scale(1.2);
+}
+100% {
+  transform: scale(1);
+}
+}
+
+.loading-indicator {
+text-align: center;
+color: #666;
+font-style: italic;
+opacity: 0;
+animation: fadeIn 1s ease 0.7s forwards;
+}
+
+.next-joke-timer {
+position: absolute;
+bottom: 10px;
+right: 15px;
+font-size: 0.8em;
+color: #999;
+opacity: 0;
+animation: fadeIn 1s ease 1s forwards;
+}
+
+.joke-stats {
+display: flex;
+justify-content: center;
+gap: 30px;
+margin-top: 20px;
+font-size: 0.9em;
+color: #666;
+opacity: 0;
+animation: fadeIn 1s ease 0.8s forwards;
+}
+
+.stat-item {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.no-jokes {
+text-align: center;
+color: #666;
+font-size: 1.1em;
+opacity: 0.8;
+}
+
+/* Modal for adding jokes */
+.modal {
+display: none;
+position: fixed;
+z-index: 2000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+backdrop-filter: blur(5px);
+}
+
+.modal-content {
+background: white;
+margin: 5% auto;
+padding: 30px;
+border-radius: 20px;
+width: 90%;
+max-width: 500px;
+animation: slideIn 0.3s ease;
+}
+
+.modal h2 {
+color: #2a5298;
+margin-bottom: 20px;
+}
+
+.modal textarea {
+width: 100%;
+padding: 15px;
+border: 2px solid #e1e5e9;
+border-radius: 10px;
+resize: vertical;
+min-height: 120px;
+font-family: inherit;
+font-size: 1em;
+}
+
+.modal textarea:focus {
+outline: none;
+border-color: #667eea;
+}
+
+.modal-buttons {
+display: flex;
+gap: 15px;
+justify-content: flex-end;
+margin-top: 20px;
+}
+
+.modal-btn {
+padding: 10px 20px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+}
+
+.submit-btn {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+}
+
+.cancel-btn {
+background: #f8f9fa;
+color: #666;
+border: 2px solid #e1e5e9;
+}
+
+@media (max-width: 768px) {
+.joke-container {
+  margin: 20px;
+  padding: 30px 20px;
+}
+
+.joke-text {
+  font-size: 1.1em;
+}
+
+.vote-buttons {
+  gap: 15px;
+}
+
+.vote-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 1.3em;
+}
+}
+
+
+.navigation-controls {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.nav-control-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-control-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-control-btn:active {
+    transform: translateY(0);
+}
