@@ -18,11 +18,12 @@
 
 ## 🚀 Live Demo
 
-[Add your deployed app link here]
+[https://joke-feed-production.up.railway.app/]
 
 ## 📸 Screenshots
 
-*Coming soon - add screenshots of your app*
+*![JokeFeed](Joke.png)
+*
 
 ---
 
