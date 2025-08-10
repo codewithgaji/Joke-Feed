@@ -51,12 +51,12 @@ AUTH_USER_MODEL = 'accounts.User'
 
 REST_FRAMEWORK = {
   'NON_FIELD_ERROR_KEY': 'errors',
-  'DEFAULT_AUTHENTICATION_KEY': (
+  'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework.authentication.TokenAuthentication',
     'rest_framework.authentication.SessionAuthentication',
    
   ),
-  'DEFAUL_PERMISSION_KEY': (
+  'DEFAULT_PERMISSION_CLASSES': (
     'rest_framework.permissions.IsAuthenticated',
   )
 }
