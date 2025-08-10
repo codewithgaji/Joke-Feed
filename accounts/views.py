@@ -4,7 +4,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status, generics, mixins
 from .serializers import SignupSerializer
-from rest_framework.permissions import AllowAny
+
 from django.contrib.auth import authenticate
 from django.views import View
 
@@ -14,26 +14,31 @@ from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import generics, mixins
-from django.shortcuts import get_object_or_404
+
 from rest_framework.views import APIView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+
+
 from django.views import View
 import json
-from rest_framework.authentication import TokenAuthentication
+
 from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 User = get_user_model()
 # Create your views here.
 
 # API Views (for JSON responses)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginAPIView(View):
     def post(self, request):
         try:
@@ -97,6 +102,8 @@ class LoginAPIView(View):
                 'message': f'An error occurred: {str(e)}'
             }, status=500)
 
+
+@method_decorator(csrf_exempt, name='dispatch')
 class SignupAPIView(View):
     def post(self, request):
         try:
