@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-8dwpjd7&d#8x1hl$l-ny&v4#xo*zx2_tylclw-+nhu%zj*32$8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*",
+                 "joke-feed-production.up.railway.app",]
 
 
 # Application definition
@@ -112,6 +113,14 @@ DATABASES = {
       }
   }
 
+
+
+# Add this to your settings.py
+CSRF_TRUSTED_ORIGINS = [
+    'https://joke-feed-production.up.railway.app',
+    'http://localhost:8000',  # Keep this for local development
+    'http://127.0.0.1:8000',  # Alternative local address
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
