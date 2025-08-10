@@ -1,3 +1,5 @@
+![JokeFeed](JokeFeed.png)
+
 # 🎭 JokeFeed - A TikTok-Style Jokes Platform
 
 ![JokeFeed Demo](https://img.shields.io/badge/Status-Complete-brightgreen) ![Django](https://img.shields.io/badge/Django-4.x-blue) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
