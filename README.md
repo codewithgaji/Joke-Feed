@@ -16,7 +16,7 @@
 - 🔐 **User Authentication**: Secure signup/login system with token-based auth
 - 📱 **Responsive Design**: Works on both desktop and mobile devices
 
-## 🚀 Live Demo
+## 🚀 Live Link
 
 [https://joke-feed-production.up.railway.app/]
 
