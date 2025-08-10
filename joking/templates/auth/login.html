@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Jokes</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="icon" href="{% static 'images/jokefeed1.png' %}" type="image/png">
+
   </head>
   <body>
     <div class="login-container">
@@ -37,7 +39,7 @@
       </form>
 
       <p class="signup-link">
-        Don't have an account? <a href="/signup/">Create one here</a>
+        Don't have an account? <a href="/accounts/signup/">Create one here</a>
       </p>
     </div>
 
@@ -69,7 +71,7 @@
 
         try {
           // Replace with your Django login endpoint
-          const response = await fetch("/api/view/login/", {
+          const response = await fetch("/accounts/api/login/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

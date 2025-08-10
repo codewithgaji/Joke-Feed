@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jokes - Laugh Out Loud!</title>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <link rel="icon" href="{% static 'images/jokefeed1.png' %}" type="image/png">
   </head>
   <body>
     <nav class="navbar">
@@ -15,21 +16,33 @@
           <button class="nav-btn add-joke-btn" onclick="openModal()">
             + Add Joke
           </button>
-          <a href="{% url 'landingpage' %}"><button class="nav-btn logout-btn" onclick="logout()">Logout</button></a>
+          <a href="{% url 'about' %}"
+            ><button class="nav-btn">Creator 👨‍💻</button></a
+          >
+          <a href="{% url 'landingpage' %}"
+            ><button class="nav-btn logout-btn" onclick="logout()">
+              Logout
+            </button></a
+          >
         </div>
       </div>
     </nav>
 
     <div class="main-container">
+      <!-- The on-screen message box for feedback -->
+      <div id="messageBox" class="message-box"></div>
+      
       <div class="joke-container" id="jokeContainer">
         <div class="joke-content" id="jokeContent">
           <div class="no-jokes" id="noJokes">Loading amazing jokes... 😄</div>
         </div>
       </div>
-      
+
       <!-- Navigation Controls -->
       <div class="navigation-controls">
-        <button class="nav-control-btn" onclick="previousJoke()">← Previous</button>
+        <button class="nav-control-btn" onclick="previousJoke()">
+          ← Previous
+        </button>
         <button class="nav-control-btn" onclick="nextJoke()">Next →</button>
       </div>
     </div>
@@ -65,6 +78,7 @@
       let currentJokeIndex = 0;
       let autoNextTimer = null;
       let timerDisplay = null;
+      let userVoted = {}; // Tracks which jokes the user has voted on
 
       // Initialize the app
       document.addEventListener("DOMContentLoaded", function () {
@@ -93,9 +107,15 @@
 
           if (response.ok) {
             currentJokes = await response.json();
+            // Initialize local tracking for user's votes
+            currentJokes.forEach(joke => {
+                joke.userVoted = null; // 'up', 'down', or null
+            });
             if (currentJokes.length > 0) {
               displayCurrentJoke();
               startAutoNext();
+              document.querySelector(".navigation-controls").style.display =
+                "flex";
             } else {
               showNoJokes();
             }
@@ -124,52 +144,50 @@
 
         setTimeout(() => {
           jokeContent.innerHTML = `
-                    <div class="joke-text">${joke.content || joke.text}</div>
-                    <div class="joke-meta">
-                        <div class="author">
-                            <div class="author-avatar">${(
-                              joke.created_by ||
-                              joke.author ||
-                              "Anonymous"
-                            )
-                              .charAt(0)
-                              .toUpperCase()}</div>
-                            <span>by ${
-                              joke.created_by || joke.author || "Anonymous"
-                            }</span>
-                        </div>
-                        <div class="date">${formatDate(
-                          joke.created_at || joke.date
-                        )}</div>
-                    </div>
-                    <div class="vote-buttons">
-                        <button class="vote-btn upvote-btn" onclick="vote('up', ${
-                          joke.id
-                        })">
-                            👍
-                        </button>
-                        <button class="vote-btn downvote-btn" onclick="vote('down', ${
-                          joke.id
-                        })">
-                            👎
-                        </button>
-                    </div>
-                    <div class="joke-stats">
-                        <div class="stat-item">
-                            <span>👍</span>
-                            <span id="upvotes-${joke.id}">${
-            joke.upvotes || 0
-          }</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>👎</span>
-                            <span id="downvotes-${joke.id}">${
-            joke.downvotes || 0
-          }</span>
-                        </div>
-                    </div>
-                    <div class="next-joke-timer" id="timer">Next joke in <span id="countdown">7</span>s</div>
-                `;
+            <div class="joke-text">${joke.content || joke.text}</div>
+            <div class="joke-meta">
+              <div class="author">
+                <div class="author-avatar">${(
+                  joke.created_by ||
+                  joke.author ||
+                  "Anonymous"
+                )
+                  .charAt(0)
+                  .toUpperCase()}</div>
+                <span>by ${
+                  joke.created_by || joke.author || "Anonymous"
+                }</span>
+              </div>
+              <div class="date">${formatDate(
+                joke.created_at || joke.date
+              )}</div>
+            </div>
+            <div class="vote-buttons">
+              <button class="vote-btn upvote-btn ${joke.userVoted === 'up' ? 'voted' : ''}" onclick="vote(event, 'up', ${
+                joke.id
+              })">
+                👍
+              </button>
+              <button class="vote-btn downvote-btn ${joke.userVoted === 'down' ? 'voted' : ''}" onclick="vote(event, 'down', ${
+                joke.id
+              })">
+                👎
+              </button>
+            </div>
+            <div class="joke-stats">
+              <div class="stat-item">
+                <span>👍</span>
+                <span id="upvotes-${joke.id}">${joke.upvotes || 0}</span>
+              </div>
+              <div class="stat-item">
+                <span>👎</span>
+                <span id="downvotes-${joke.id}">${joke.downvotes || 0}</span>
+              </div>
+            </div>
+            <div class="next-joke-timer" id="timer">
+              Next joke in <span id="countdown">7</span>s
+            </div>
+          `;
 
           // Fade in new content
           jokeContent.style.opacity = "1";
@@ -178,9 +196,69 @@
       }
 
       // Vote on a joke
-      async function vote(type, jokeId) {
+      async function vote(event, type, jokeId) {
+        const upvoteElement = document.getElementById(`upvotes-${jokeId}`);
+        const downvoteElement = document.getElementById(`downvotes-${jokeId}`);
+        const jokeToUpdate = currentJokes.find((joke) => joke.id === jokeId);
+
+        if (!jokeToUpdate) {
+          console.error("Joke not found in local data.");
+          return;
+        }
+        
+        // **INSTANT FEEDBACK: Check if user has already voted**
+        if (jokeToUpdate.userVoted === type) {
+            showMessage("You have already voted on this joke!");
+            // Do not proceed with the API call
+            return;
+        }
+
+        // Disable all vote buttons to prevent rapid clicking
+        const voteButtons = document.querySelectorAll('.vote-btn');
+        voteButtons.forEach(btn => btn.disabled = true);
+
+        // Store original vote counts for potential rollback
+        const originalUpvotes = jokeToUpdate.upvotes;
+        const originalDownvotes = jokeToUpdate.downvotes;
+        const originalUserVoted = jokeToUpdate.userVoted;
+
+        // **OPTIMISTIC UI UPDATE & VOTE TOGGLING LOGIC**
+        // Case 1: User is switching their vote (e.g., from up to down)
+        if (originalUserVoted && originalUserVoted !== type) {
+            if (originalUserVoted === 'up') {
+                jokeToUpdate.upvotes = (jokeToUpdate.upvotes || 1) - 1;
+            } else {
+                jokeToUpdate.downvotes = (jokeToUpdate.downvotes || 1) - 1;
+            }
+        }
+        
+        // Case 2: User is casting a new vote
+        if (!originalUserVoted || originalUserVoted !== type) {
+            if (type === 'up') {
+                jokeToUpdate.upvotes = (jokeToUpdate.upvotes || 0) + 1;
+            } else {
+                jokeToUpdate.downvotes = (jokeToUpdate.downvotes || 0) + 1;
+            }
+        }
+        
+        // Update the local state for the user's vote
+        jokeToUpdate.userVoted = type;
+
+        // Update the UI immediately to reflect the new counts and button state
+        if (upvoteElement) upvoteElement.textContent = jokeToUpdate.upvotes;
+        if (downvoteElement) downvoteElement.textContent = jokeToUpdate.downvotes;
+        
+        // Remove 'voted' class from all buttons and add it to the selected one
+        const upvoteButton = document.querySelector(`.upvote-btn`);
+        const downvoteButton = document.querySelector(`.downvote-btn`);
+        upvoteButton.classList.remove('voted');
+        downvoteButton.classList.remove('voted');
+        if (type === 'up') upvoteButton.classList.add('voted');
+        else downvoteButton.classList.add('voted');
+
+        // Send the vote to the backend
         try {
-          const voteType = type === 'up' ? 'upvote' : 'downvote';
+          const voteType = type === "up" ? "upvote" : "downvote";
           const response = await fetch(`/${jokeId}/${voteType}/`, {
             method: "POST",
             headers: {
@@ -192,46 +270,58 @@
           });
 
           if (response.ok) {
-            const result = await response.json();
+            console.log("Vote successfully registered on the server.");
+          } else {
+            // Rollback UI if server fails
+            jokeToUpdate.upvotes = originalUpvotes;
+            jokeToUpdate.downvotes = originalDownvotes;
+            jokeToUpdate.userVoted = originalUserVoted;
+            if (upvoteElement) upvoteElement.textContent = originalUpvotes;
+            if (downvoteElement) downvoteElement.textContent = originalDownvotes;
+            upvoteButton.classList.remove('voted');
+            downvoteButton.classList.remove('voted');
+            if (originalUserVoted === 'up') upvoteButton.classList.add('voted');
+            else if (originalUserVoted === 'down') downvoteButton.classList.add('voted');
             
-            // After voting, get the updated vote counts
-            const voteResponse = await fetch(`/${jokeId}/votes/`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-                "X-CSRFToken": getCookie("csrftoken"),
-              },
-            });
+            console.error("Vote failed, reverting UI.");
+            const errorData = await response.json();
+            showMessage(`Vote failed: ${errorData.detail || "You have already voted on this joke."}`);
+          }
+        } catch (error) {
+            // Rollback UI for network errors
+            jokeToUpdate.upvotes = originalUpvotes;
+            jokeToUpdate.downvotes = originalDownvotes;
+            jokeToUpdate.userVoted = originalUserVoted;
+            if (upvoteElement) upvoteElement.textContent = originalUpvotes;
+            if (downvoteElement) downvoteElement.textContent = originalDownvotes;
+            upvoteButton.classList.remove('voted');
+            downvoteButton.classList.remove('voted');
+            if (originalUserVoted === 'up') upvoteButton.classList.add('voted');
+            else if (originalUserVoted === 'down') downvoteButton.classList.add('voted');
+
+            console.error("Network error, reverting UI:", error);
+            showMessage("An error occurred. Please check your connection.");
+        } finally {
+            // Re-enable vote buttons
+            voteButtons.forEach(btn => btn.disabled = false);
             
-            if (voteResponse.ok) {
-              const voteData = await voteResponse.json();
-              
-              // Update vote counts using the correct field names from your backend
-              const upvoteElement = document.getElementById(`upvotes-${jokeId}`);
-              const downvoteElement = document.getElementById(`downvotes-${jokeId}`);
-
-              if (upvoteElement) upvoteElement.textContent = voteData.Upvotes || 0;
-              if (downvoteElement) downvoteElement.textContent = voteData.Downvotes || 0;
-            }
-
-            // Add visual feedback
-            const button = event.target.closest(".vote-btn");
-            if (button) {
-              button.classList.add("voted");
-              setTimeout(() => button.classList.remove("voted"), 600);
-            }
-
-            // Move to next joke faster after voting
+            // Move to the next joke faster after voting
             clearTimeout(autoNextTimer);
             clearInterval(timerDisplay);
             setTimeout(() => {
-              nextJoke();
+                nextJoke();
             }, 1000);
-          } else {
-            console.error("Vote failed");
-          }
-        } catch (error) {
-          console.error("Error voting:", error);
         }
+      }
+
+      // Show a message in the custom message box
+      function showMessage(message) {
+        const messageBox = document.getElementById('messageBox');
+        messageBox.textContent = message;
+        messageBox.style.display = 'block';
+        setTimeout(() => {
+            messageBox.style.display = 'none';
+        }, 2000); // Hide after 2 seconds
       }
 
       // Move to next joke
@@ -243,7 +333,8 @@
 
       // Move to previous joke
       function previousJoke() {
-        currentJokeIndex = (currentJokeIndex - 1 + currentJokes.length) % currentJokes.length;
+        currentJokeIndex =
+          (currentJokeIndex - 1 + currentJokes.length) % currentJokes.length;
         displayCurrentJoke();
         startAutoNext();
       }
@@ -257,6 +348,7 @@
         const countdownElement = document.getElementById("countdown");
 
         if (countdownElement) {
+          countdownElement.textContent = countdown; // Initialize countdown display
           timerDisplay = setInterval(() => {
             countdown--;
             countdownElement.textContent = countdown;
@@ -276,13 +368,20 @@
       function showNoJokes() {
         const jokeContent = document.getElementById("jokeContent");
         jokeContent.innerHTML = `
-                <div class="no-jokes">
-                    No jokes available yet! 😢<br>
-                    <button class="nav-btn add-joke-btn" onclick="openModal()" style="margin-top: 20px;">
-                        Be the first to add one! 
-                    </button>
-                </div>
-            `;
+          <div class="no-jokes">
+            No jokes available yet! 😢<br>
+            <button class="nav-btn add-joke-btn" onclick="openModal()" style="margin-top: 20px;">
+              Be the first to add one! 
+            </button>
+          </div>
+        `;
+        // Hide navigation controls if no jokes
+        document.querySelector(".navigation-controls").style.display = "none";
+        // Also hide the timer, as there's no joke to display it for
+        const timerElement = document.getElementById("timer");
+        if (timerElement) {
+          timerElement.style.display = "none";
+        }
       }
 
       // Format date
@@ -339,10 +438,14 @@
               currentJokes.unshift(newJoke); // Add to beginning of array
               closeModal();
 
-              // Show the new joke
+              // Show the new joke and restart timer
               currentJokeIndex = 0;
               displayCurrentJoke();
               startAutoNext();
+              // Ensure navigation controls are visible if a joke is added after no jokes were present
+              document.querySelector(".navigation-controls").style.display =
+                "flex";
+              document.getElementById("timer").style.display = "block";
             } else {
               throw new Error("Failed to post joke");
             }
@@ -369,8 +472,26 @@
         }
       };
 
-      // Keyboard shortcuts
+      // Fixed Keyboard shortcuts - now checks if user is typing
       document.addEventListener("keydown", function (e) {
+        // Check if user is typing in an input field
+        const activeElement = document.activeElement;
+        const isTyping = activeElement && (
+          activeElement.tagName === 'INPUT' || 
+          activeElement.tagName === 'TEXTAREA' || 
+          activeElement.contentEditable === 'true'
+        );
+        
+        // Don't process shortcuts if user is typing
+        if (isTyping) {
+          // Allow Escape to close modal even when typing
+          if (e.key === "Escape") {
+            closeModal();
+          }
+          return;
+        }
+        
+        // Process shortcuts only when not typing
         if (e.key === "ArrowRight" || e.key === " ") {
           e.preventDefault();
           clearTimeout(autoNextTimer);
@@ -412,5 +533,4 @@
     </script>
   </body>
 </html>
-
 {% endblock %}

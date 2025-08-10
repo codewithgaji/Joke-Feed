@@ -36,6 +36,8 @@ class User(AbstractUser):
   REQUIRED_FIELDS = ['username']
   USERNAME_FIELD = 'email'
 
+  objects = CustomUser()
+
   def __str__(self):
     return self.username
 

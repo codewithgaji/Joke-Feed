@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Jokes - Sign Up</title>
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="icon" href="{% static 'images/jokefeed1.png' %}" type="image/png">
+
 </head>
 <body>
     <div class="signup-container">
@@ -41,7 +43,7 @@
         </form>
 
         <p class="login-link">
-            Already have an account? <a href="/login/">Sign in here</a>
+            Already have an account? <a href="{%url 'login_page' %}">Sign in here</a>
         </p>
     </div>
 
@@ -72,11 +74,8 @@
             submitBtn.textContent = 'Creating Account...';
 
             try {
-                console.log('Sending signup request to:', '/api/signup/');
-                console.log('Data:', data);
-                
                 // Replace with your Django signup endpoint
-                const response = await fetch('/api/signup/', {
+                const response = await fetch('/accounts/api/signup/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,17 +84,6 @@
                     body: JSON.stringify(data)
                 });
 
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-                
-                // Check if response is actually JSON
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const textResponse = await response.text();
-                    console.log('Non-JSON response:', textResponse);
-                    throw new Error('Server returned HTML instead of JSON. Check your Django view.');
-                }
-
                 const result = await response.json();
 
                 if (response.ok) {
@@ -103,14 +91,15 @@
                     successMessage.style.display = 'block';
                     
                     setTimeout(() => {
-                        window.location.href = '/login/';
+                        window.location.href = 'accounts/login/';
                     }, 2000);
                 } else {
-                    throw new Error(result.message || 'Signup failed');
+                    errorMessage.textContent = result.message || 'Signup failed.';
+                    errorMessage.style.display = 'block';
                 }
 
             } catch (error) {
-                errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
+                errorMessage.textContent = 'A network error occurred. Please try again.';
                 errorMessage.style.display = 'block';
             } finally {
                 // Reset button state

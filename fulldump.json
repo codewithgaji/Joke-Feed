@@ -1,0 +1,585 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-08-07T21:11:13.225Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "It’s only in Nigeria where we count money after wi",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-08-07T21:11:38.134Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "gaji@gmail.com - upvote on joke 1",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-08-08T01:21:32.997Z",
+    "user": 1,
+    "content_type": 6,
+    "object_id": "3",
+    "object_repr": "Yk",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-08-08T01:21:41.757Z",
+    "user": 1,
+    "content_type": 6,
+    "object_id": "2",
+    "object_repr": "Gaji",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "6",
+    "object_repr": "Stop warming bath water with cooking pot; one man ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "Stop warming bath water with cooking pot; one man ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "Stop warming bath water with cooking pot; one man ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Stop warming bath water with cooking pot; one man ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "content",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-08-08T14:49:05.048Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "It’s only in Nigeria where we count money after wi",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "5qayxu4qqpb2nmtfal0eg8l3zpadbcwy",
+  "fields": {
+    "session_data": ".eJxVjM0OgjAQhN-lZ9N0ocvf0bvP0Cy7RaqmJRQSjfHdhYSD3iYz33xv5WhdRrdmP7sgqlOgTr9dT3z3cR_kRvGaNKe4zKHXO6KPNetLEv84H-yfYKQ8bm8PMiAbLkvi0gAWRgQqEcS2B7KMhqm2tsUttRtUASENFdbcQAPFsEuzzzmk6PxzCvNLdebzBYUsPsA:1ukPgJ:uoli121OcGs83c1iKT78AXX3vce7v-T0nJRIxST39nA",
+    "expire_date": "2025-08-22T16:10:59.020Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "6ofmdmxm6vg1bnb7d7eo7ti5jwtpa0rk",
+  "fields": {
+    "session_data": ".eJxVjM0OgjAQhN-lZ9N0ocvf0bvP0Cy7RaqmJRQSjfHdhYSD3iYz33xv5WhdRrdmP7sgqlOgTr9dT3z3cR_kRvGaNKe4zKHXO6KPNetLEv84H-yfYKQ8bm8PMiAbLkvi0gAWRgQqEcS2B7KMhqm2tsUttRtUASENFdbcQAPFsEuzzzmk6PxzCvNLdebzBYUsPsA:1ukOZg:mInd54d2go6mcSMeGW1xMUzpY6nAaqL3CrUDgITp-SE",
+    "expire_date": "2025-08-22T15:00:04.775Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "71upw5iowiqt2nqpuiqgsppdamgvyzf8",
+  "fields": {
+    "session_data": "e30:1ukCBu:p44jZ-Y-hzFzRMwBQzLcPQskpkNQQUV996TjuoSElJo",
+    "expire_date": "2025-08-22T01:46:42.347Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "e3fbghkujt14pjzui60fqdv39ux1yk74",
+  "fields": {
+    "session_data": ".eJxVjM0OgjAQhN-lZ9N0ocvf0bvP0Cy7RaqmJRQSjfHdhYSD3iYz33xv5WhdRrdmP7sgqlOgTr9dT3z3cR_kRvGaNKe4zKHXO6KPNetLEv84H-yfYKQ8bm8PMiAbLkvi0gAWRgQqEcS2B7KMhqm2tsUttRtUASENFdbcQAPFsEuzzzmk6PxzCvNLdebzBYUsPsA:1ukCEY:tdiPgY5md1dujHxA17OG2rRnT8L-ec2LjomdpR3KRpM",
+    "expire_date": "2025-08-22T01:49:26.178Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fc14qmqpm8bcgp8rs6uty1uj2wkl5zpz",
+  "fields": {
+    "session_data": ".eJxVjM0OgjAQhN-lZ9N0ocvf0bvP0Cy7RaqmJRQSjfHdhYSD3iYz33xv5WhdRrdmP7sgqlOgTr9dT3z3cR_kRvGaNKe4zKHXO6KPNetLEv84H-yfYKQ8bm8PMiAbLkvi0gAWRgQqEcS2B7KMhqm2tsUttRtUASENFdbcQAPFsEuzzzmk6PxzCvNLdebzBYUsPsA:1ukE8Z:POX8KfjZs7uu-WWn1i7hjjnwAQQomzWdZCLlpyV5unU",
+    "expire_date": "2025-08-22T03:51:23.843Z"
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$HEtU0xQfJt9bW6UZgIlQBr$Q6B4tlRX0Aq5cyFfqarmL4siLpCLMBT5/8U32JzPHq8=",
+    "last_login": "2025-08-08T16:10:59.001Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-07T21:04:01.637Z",
+    "email": "gaji@gmail.com",
+    "date_of_birth": null,
+    "username": "gaji",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$lLjiJokn86OE0msJgCL28O$tvy+mQ5Ts/o0PthFhFI199k1N2Nu1Rf7W1XQwJivp4k=",
+    "last_login": "2025-08-08T01:48:05.804Z",
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-08T01:28:10.733Z",
+    "email": "gajiyakub6@gmail.com",
+    "date_of_birth": null,
+    "username": "Gaji",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 7,
+  "fields": {
+    "content": "Stop warming bath water with cooking pot; one man in the bank today smelled like jollof rice.😂",
+    "created_by": 1,
+    "created_at": "2025-08-08T14:49:57.964Z",
+    "upvotes": 1,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 8,
+  "fields": {
+    "content": "😂 When NEPA takes light and you hear your neighbor shout 'Up NEPA!' before the light even comes back.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.042Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 9,
+  "fields": {
+    "content": "😂 When your mom says 'I'm not angry' but starts cleaning the house aggressively.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.055Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 10,
+  "fields": {
+    "content": "😂 When you greet your Nigerian dad and he replies 'Hmm'… you know something is wrong.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.064Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 11,
+  "fields": {
+    "content": "😂 That moment you buy suya and the suya man asks 'Should I add pepper?' like it’s optional.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.071Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 12,
+  "fields": {
+    "content": "😂 When your mom says 'Just taste it' and suddenly you’re eating a full plate of food.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.081Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 13,
+  "fields": {
+    "content": "😂 Nigerian banks will debit you faster than they send debit alert.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.089Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 14,
+  "fields": {
+    "content": "😂 When a Nigerian lecturer says 'This question is simple' — start sweating.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.097Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 15,
+  "fields": {
+    "content": "😂 When you’re on a Zoom call and PHCN decides to ‘disconnect’ you.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.107Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 16,
+  "fields": {
+    "content": "😂 Nigerian parents will call you from another room just to pass them the remote beside them.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.116Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 17,
+  "fields": {
+    "content": "😂 When your bus conductor says 'One chance!' and you start thinking about your life decisions.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:17:43.125Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 18,
+  "fields": {
+    "content": "😂 When NEPA takes light and you hear your neighbor shout 'Up NEPA!' before the light even comes back.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.544Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 19,
+  "fields": {
+    "content": "😂 When your mom says 'I'm not angry' but starts cleaning the house aggressively.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.555Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 20,
+  "fields": {
+    "content": "😂 When you greet your Nigerian dad and he replies 'Hmm'… you know something is wrong.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.562Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 21,
+  "fields": {
+    "content": "😂 That moment you buy suya and the suya man asks 'Should I add pepper?' like it’s optional.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.569Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 22,
+  "fields": {
+    "content": "😂 When your mom says 'Just taste it' and suddenly you’re eating a full plate of food.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.575Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 23,
+  "fields": {
+    "content": "😂 Nigerian banks will debit you faster than they send debit alert.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.582Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 24,
+  "fields": {
+    "content": "😂 When a Nigerian lecturer says 'This question is simple' — start sweating.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.589Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 25,
+  "fields": {
+    "content": "😂 When you’re on a Zoom call and PHCN decides to ‘disconnect’ you.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.597Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 26,
+  "fields": {
+    "content": "😂 Nigerian parents will call you from another room just to pass them the remote beside them.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.604Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 27,
+  "fields": {
+    "content": "😂 When your bus conductor says 'One chance!' and you start thinking about your life decisions.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:01.611Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 28,
+  "fields": {
+    "content": "😂 When NEPA takes light and you hear your neighbor shout 'Up NEPA!' before the light even comes back.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.803Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 29,
+  "fields": {
+    "content": "😂 When your mom says 'I'm not angry' but starts cleaning the house aggressively.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.813Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 30,
+  "fields": {
+    "content": "😂 When you greet your Nigerian dad and he replies 'Hmm'… you know something is wrong.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.820Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 31,
+  "fields": {
+    "content": "😂 That moment you buy suya and the suya man asks 'Should I add pepper?' like it’s optional.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.827Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 32,
+  "fields": {
+    "content": "😂 When your mom says 'Just taste it' and suddenly you’re eating a full plate of food.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.835Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 33,
+  "fields": {
+    "content": "😂 Nigerian banks will debit you faster than they send debit alert.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.842Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 34,
+  "fields": {
+    "content": "😂 When a Nigerian lecturer says 'This question is simple' — start sweating.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.850Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 35,
+  "fields": {
+    "content": "😂 When you’re on a Zoom call and PHCN decides to ‘disconnect’ you.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.858Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 36,
+  "fields": {
+    "content": "😂 Nigerian parents will call you from another room just to pass them the remote beside them.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.866Z",
+    "upvotes": 0,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.jokesmodel",
+  "pk": 37,
+  "fields": {
+    "content": "😂 When your bus conductor says 'One chance!' and you start thinking about your life decisions.",
+    "created_by": 1,
+    "created_at": "2025-08-08T15:18:39.877Z",
+    "upvotes": 1,
+    "downvotes": 0
+  }
+},
+{
+  "model": "joking.trackvote",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "joke": 7,
+    "vote_type": "upvote"
+  }
+},
+{
+  "model": "joking.trackvote",
+  "pk": 6,
+  "fields": {
+    "user": 1,
+    "joke": 37,
+    "vote_type": "upvote"
+  }
+},
+{
+  "model": "authtoken.token",
+  "pk": "1e753fa3caff580bc66a65ae10231e10be536b8b",
+  "fields": {
+    "user": 1,
+    "created": "2025-08-08T01:49:26.165Z"
+  }
+},
+{
+  "model": "authtoken.token",
+  "pk": "84e0995bf2b78901be1dc1ec2eafe849ac5d4c7f",
+  "fields": {
+    "user": 4,
+    "created": "2025-08-08T01:48:05.818Z"
+  }
+}
+]

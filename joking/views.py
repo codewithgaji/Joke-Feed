@@ -27,119 +27,7 @@ from rest_framework.permissions import IsAuthenticated
 User = get_user_model()
 
 
-@login_required
-def homeView(request):
-    return render(request, "index.html")
-
-@method_decorator(csrf_exempt, name='dispatch')
-class SignupView(View):
-    def post(self, request):
-        try:
-            data = json.loads(request.body)
-            username = data.get('username')
-            email = data.get('email')
-            password = data.get('password')
-            
-            # Validation
-            if User.objects.filter(email=email).exists():
-                return JsonResponse({
-                    'error': True,
-                    'message': 'Email already exists'
-                }, status=400)
-            
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({
-                    'error': True,
-                    'message': 'Username already exists'
-                }, status=400)
-            
-            # Create user
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password
-            )
-            
-            return JsonResponse({
-                'success': True,
-                'message': 'Account created successfully',
-                'user_id': user.id
-            }, status=201)
-            
-        except Exception as e:
-            return JsonResponse({
-                'error': True,
-                'message': str(e)
-            }, status=500)
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-
-class LoginView(View):
-    def post(self, request):
-        try:
-            data = json.loads(request.body)
-            email = data.get('email', '').strip().lower()
-            password = data.get('password', '')
-            remember = data.get('remember', False)
-
-            if not email or not password:
-                return JsonResponse({
-                    'error': True,
-                    'message': 'Email and password are required'
-                }, status=400)
-
-            # Authenticate using email as username
-            user = authenticate(request, username=email, password=password)
-
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-
-                    if remember:
-                        request.session.set_expiry(30 * 24 * 60 * 60)  # 30 days
-                    else:
-                        request.session.set_expiry(0)  # session only
-
-                    # Get or create DRF token
-                    token, _ = Token.objects.get_or_create(user=user)
-
-                    return JsonResponse({
-                        'success': True,
-                        'message': 'Login successful!',
-                        'user': {
-                            'id': user.id,
-                            'username': user.username,
-                            'email': user.email,
-                            'first_name': user.first_name,
-                            'last_name': user.last_name
-                        },
-                        'token': token.key,
-                        'session_key': request.session.session_key
-                    }, status=200)
-                else:
-                    return JsonResponse({
-                        'error': True,
-                        'message': 'Your account has been deactivated'
-                    }, status=401)
-
-            else:
-                return JsonResponse({
-                    'error': True,
-                    'message': 'Invalid email or password'
-                }, status=401)
-
-        except json.JSONDecodeError:
-            return JsonResponse({
-                'error': True,
-                'message': 'Invalid JSON data'
-            }, status=400)
-        except Exception as e:
-            return JsonResponse({
-                'error': True,
-                'message': f'An error occurred: {str(e)}'
-            }, status=500)
-# Optional: Logout view
+# # Optional: Logout view
 @method_decorator(csrf_exempt, name='dispatch')
 class LogoutView(View):
     def post(self, request):
@@ -156,15 +44,6 @@ class LogoutView(View):
                 'message': f'Logout failed: {str(e)}'
             }, status=500)
 
-# Template views (for serving the HTML pages)
-def signup_page(request):
-    return render(request, 'auth/signup.html')
-
-def login_page(request):
-    return render(request, 'auth/login.html')
-
-def home_page(request):
-    return render(request, 'home.html')
 
 
 def landing_page(request):
